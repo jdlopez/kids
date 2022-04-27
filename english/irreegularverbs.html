@@ -11,8 +11,8 @@
 <div class="container">
     <div>Complete verb:
     <input class="btn btn-primary" type="button" value="Next" onclick="next()" />
-    <br/><label for="verbsSize" class="form-label">Max size</label>
-    <input type="range" class="form-range" min="5" max="35" step="5" id="verbsSize">
+    <br/><label for="verbsSize" class="form-label">Max size</label> <span><input type="text" readonly class="form-control-plaintext" id="rangeValue" value="35"></span>
+    <input type="range" class="form-range" min="5" max="35" step="5" id="verbsSize" onclick="document.getElementById('rangeValue').value=this.value">
     </div>
     <br/>
     <label for="infinitive" class="form-label">infinitive</label>
@@ -95,7 +95,8 @@
             , {"infinitive": "Write", "past":"Wrote","participle":"Written","spanish":"Escribir"}
         ];
 // , {"infinitive": "", "past":"","participle":"","spanish":""}
-        document.getElementById("verbsSize").max = verbs.length;
+		// round to step 5 (plus 1)
+        document.getElementById("verbsSize").max = verbs.length + (5*(verbs.length % 5==0?0:1)) - (verbs.length % 5);
         const currentRandomSet = new Set();
         function getRandomArbitrary(min, max) {
             // keep tracking to avoid repeating
@@ -139,7 +140,9 @@
         var actualVerb = null;
 
         function next() {
-            var verbIndex = getRandomArbitrary(0, verbs.length - 1);
+		    var maxVerbArray = document.getElementById("verbsSize").value;
+			maxVerbArray = Math.min(maxVerbArray, verbs.length - 1);
+            var verbIndex = getRandomArbitrary(0, maxVerbArray);
             actualVerb = verbs[verbIndex];
             var option = getRandomArbitrary(0, 3);
             document.getElementById("infinitive").value = '';
