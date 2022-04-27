@@ -12,7 +12,7 @@
     <div>Complete verb:
     <input class="btn btn-primary" type="button" value="Next" onclick="next()" />
     <br/><label for="verbsSize" class="form-label">Max size</label> <span><input type="text" readonly class="form-control-plaintext" id="rangeValue" value="35"></span>
-    <input type="range" class="form-range" min="5" max="35" step="5" id="verbsSize" onclick="document.getElementById('rangeValue').value=this.value">
+    <input type="range" class="form-range" min="5" max="35" step="5" id="verbsSize" onchange="document.getElementById('rangeValue').value=this.value">
     </div>
     <br/>
     <label for="infinitive" class="form-label">infinitive</label>
