@@ -3,28 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Irregular Verbs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Irregular verbs</h1>
+<div class="container">
+    <div>Complete verb:
+    <input class="btn btn-primary" type="button" value="Next" onclick="next()" />
+    <label for="customRange3" class="form-label">Max size</label>
+    <input type="range" class="form-range" min="5" max="35" step="5" id="verbsSize">
+    </div>
+    <br/>
+    <label for="infinitive" class="form-label">infinitive</label>
+    <input type="text" class="form-control" id="infinitive" /><div id="infinitive_help"></div>
+    <label for="past" class="form-label">past</label> <input type="text" class="form-control" id="past" /><div id="past_help" ></div>
+    <label for="participle" class="form-label">participle</label> <input type="text" class="form-control" id="participle" /><div id="participle_help"></div>
+    <label for="spanish" class="form-label">spanish</label> <input type="text" class="form-control" id="spanish" /><div id="spanish_help"></div>
+    <br/>
+    <input class="btn btn-primary" type="button" value="Validate" onclick="checkVerb(actualVerb)" />
+</div>
     <script>
         var verbs = [
               {"infinitive": "Be (am, are, is)", "past":"Was/Were","participle":"Been","spanish":"Ser,Estar"}
             , {"infinitive": "Can", "past":"Could","participle":"","spanish":"Poder"}
             , {"infinitive": "Do (Does)", "past":"Did","participle":"Done","spanish":"Hacer"}
             , {"infinitive": "Have (Has)", "past":"Had","participle":"Had","spanish":"Haber,Tener"}
+            , {"infinitive": "Begin", "past":"Began","participle":"Begun","spanish":"Empezar"}
+            , {"infinitive": "Blow", "past":"Blew","participle":"Blown","spanish":"Soplar"}
+            , {"infinitive": "Break", "past":"Broke","participle":"Broken","spanish":"Romper"}
             , {"infinitive": "Bring", "past":"Brought","participle":"Brought","spanish":"Traer,Llevar"}
+            , {"infinitive": "Build", "past":"Built","participle":"Built","spanish":"Construir"}
             , {"infinitive": "Buy", "past":"Bought","participle":"Bought","spanish":"Comprar"}
             , {"infinitive": "Catch", "past":"Caught","participle":"Caught","spanish":"Coger"}
             , {"infinitive": "Come", "past":"Came","participle":"Come","spanish":"Venir"}
+            , {"infinitive": "Cost", "past":"Cost","participle":"Cost","spanish":"Costar"}
+            , {"infinitive": "Cut", "past":"Cut","participle":"Cut","spanish":"Cortar"}
             , {"infinitive": "Choose", "past":"Chose","participle":"Chosen","spanish":"Elegir"}
             , {"infinitive": "Draw", "past":"Drew","participle":"Drawn","spanish":"Dibujar"}
+            , {"infinitive": "Dream", "past":"Dreamt,Dreamed","participle":"Dreamt,Dreamed","spanish":"Soñar"}
             , {"infinitive": "Drink", "past":"Drank","participle":"Drunk","spanish":"Beber"}
             , {"infinitive": "Drive", "past":"Drove","participle":"Driven","spanish":"Conducir"}
             , {"infinitive": "Eat", "past":"Ate","participle":"Eaten","spanish":"Comer"}
+            , {"infinitive": "Fall", "past":"Fell","participle":"Fallen","spanish":"Caer"}
+            , {"infinitive": "Feed", "past":"Fed","participle":"Fed","spanish":"Alimentar"}
+            , {"infinitive": "Fight", "past":"Fought","participle":"Fought","spanish":"Luchar"}
             , {"infinitive": "Find", "past":"Found","participle":"Found","spanish":"Encontrar", "help": "algo"}
             , {"infinitive": "Fly", "past":"Flew","participle":"Flown","spanish":"Volar"}
+            , {"infinitive": "Forget", "past":"Forgot","participle":"Forgotten","spanish":"Olvidar"}
             , {"infinitive": "Get", "past":"Got","participle":"Got","spanish":"Obtener"}
             , {"infinitive": "Give", "past":"Gave","participle":"Given","spanish":"Dar"}
             , {"infinitive": "Go (Goes)", "past":"Went","participle":"Gone","spanish":"Ir"}
+            , {"infinitive": "Grow", "past":"Grew","participle":"Grown","spanish":"Crecer"}
+            , {"infinitive": "Hang", "past":"Hung","participle":"Hung","spanish":"Colgar"}
+            , {"infinitive": "Hear", "past":"Heard","participle":"Heard","spanish":"Oir"}
             , {"infinitive": "Hide", "past":"Hid","participle":"Hidden","spanish":"Ocultar"}
             , {"infinitive": "Hit", "past":"Hit","participle":"Hit","spanish":"Golpear"}
             , {"infinitive": "Hold", "past":"Held","participle":"Held","spanish":"Agarrar,Sujetar"}
@@ -35,6 +67,9 @@
             , {"infinitive": "Lose", "past":"Lost","participle":"Lost","spanish":"Perder"}
             , {"infinitive": "Make", "past":"Made","participle":"Made","spanish":"Hacer,crear"}
             , {"infinitive": "Mean", "past":"Meant","participle":"Meant","spanish":"Significar"}
+            , {"infinitive": "Meet", "past":"Met","participle":"Met","spanish":"Encontrar,Reunir,Conocer"}
+            , {"infinitive": "Mistake", "past":"Mistook","participle":"Mistaken","spanish":"Equivocar"}
+            , {"infinitive": "Pay", "past":"Paid","participle":"Paid","spanish":"Pagar"}
             , {"infinitive": "Put", "past":"Put","participle":"Put","spanish":"Poner"}
             , {"infinitive": "Read", "past":"Read","participle":"Read","spanish":"Leer"}
             , {"infinitive": "Ride", "past":"Rode","participle":"Ridden","spanish":"Montar"}
@@ -44,6 +79,8 @@
             , {"infinitive": "Sing", "past":"Sang","participle":"Sung","spanish":"Cantar"}
             , {"infinitive": "Sit", "past":"Sat","participle":"Sat","spanish":"Sentarse"}
             , {"infinitive": "Sleep", "past":"Slept","participle":"Slept","spanish":"Dormir"}
+            , {"infinitive": "Smell", "past":"Smelt","participle":"Smelt","spanish":"Oler"}
+            , {"infinitive": "Speak", "past":"Spoke","participle":"Spoken","spanish":"Hablar"}
             , {"infinitive": "Spell", "past":"Spelt","participle":"Spelt","spanish":"Deletrear"}
             , {"infinitive": "Stand", "past":"Stood","participle":"Stood","spanish":"Estar de pie"}
             , {"infinitive": "Swim", "past":"Swam","participle":"Swum","spanish":"Nadar"}
@@ -54,13 +91,11 @@
             , {"infinitive": "Understand", "past":"Understood","participle":"Understood","spanish":"Entender, Comprender"}
             , {"infinitive": "Wake", "past":"Woke","participle":"Woken","spanish":"Despertarse"}
             , {"infinitive": "Wear", "past":"Wore","participle":"Worn","spanish":"Llevar puesto"}
+            , {"infinitive": "Win", "past":"Won","participle":"Won","spanish":"Ganar"}
             , {"infinitive": "Write", "past":"Wrote","participle":"Written","spanish":"Escribir"}
-            , {"infinitive": "Break", "past":"Broke","participle":"Broken","spanish":"Romper"}
-            , {"infinitive": "Build", "past":"Built","participle":"Built","spanish":"Construir"}
-            , {"infinitive": "Blow", "past":"Blew","participle":"Blown","spanish":"Soplar"}
-            , {"infinitive": "Cost", "past":"Cost","participle":"Cost","spanish":"Costar"}
         ];
 // , {"infinitive": "", "past":"","participle":"","spanish":""}
+        document.getElementById("verbsSize").max = verbs.length;
         const currentRandomSet = new Set();
         function getRandomArbitrary(min, max) {
             // keep tracking to avoid repeating
@@ -142,22 +177,6 @@
 
         }
 
-    </script>
-</head>
-<body>
-<h1>Irregular verbs</h1>
-<div class="container">
-    <div>Complete verb:
-    <input class="btn btn-primary" type="button" value="Next" onclick="next()" />
-    </div>
-    <br/>
-    <label for="infinitive" class="form-label">infinitive</label>
-    <input type="text" class="form-control" id="infinitive" /><div id="infinitive_help"></div>
-    <label for="past" class="form-label">past</label> <input type="text" class="form-control" id="past" /><div id="past_help" ></div>
-    <label for="participle" class="form-label">participle</label> <input type="text" class="form-control" id="participle" /><div id="participle_help"></div>
-    <label for="spanish" class="form-label">spanish</label> <input type="text" class="form-control" id="spanish" /><div id="spanish_help"></div>
-    <br/>
-    <input class="btn btn-primary" type="button" value="Validate" onclick="checkVerb(actualVerb)" />
-</div>
+    </script>    
 </body>
 </html>
