@@ -24,7 +24,53 @@
     <input class="btn btn-primary" type="button" value="Validate" onclick="checkVerb(actualVerb)" />
 </div>
     <script>
-        var verbs = [
+	var verbs = null;
+	// read data from URI: verblist.csv
+	fetch('./verblist.csv')
+		.then(response => response.text())
+		.then(data => {
+			verbs = convertCSV2JsonVerbs(data);
+			// round to step 5 (plus 1)
+			document.getElementById("verbsSize").max = verbs.length + (5*(verbs.length % 5==0?0:1)) - (verbs.length % 5);
+		});
+	
+	function cleanDobleQuote(somearray) {
+		for (var i=0;i<somearray.length;i++){
+			if (somearray[i].startsWith("\"") && somearray[i].endsWith("\""))
+				somearray[i] = somearray[i].substring(1, somearray[i].length - 1);
+		}
+		
+		return somearray;
+	}
+	
+	/*
+	El fichero separado por ; (como excel) tiene que tener el fin de linea de unix (\n) y no está implementado la " para escapar la propia ;
+	*/
+	function convertCSV2JsonVerbs(csv) {
+		var lines=csv.split("\n");
+
+		var result = [];
+		
+		var headers = lines[0].split(";");
+
+		for(var i=1;i<lines.length;i++){
+
+		  var obj = {};
+		  var currentline=lines[i].split(";");
+
+		  for(var j=0;j<headers.length;j++){
+			
+			  obj[headers[j]] = currentline[j];
+		  }
+
+		  result.push(obj);
+
+		} // for
+		return result;
+	}
+	
+		/*
+	var verbs = [
               {"infinitive": "Be (am, are, is)", "past":"Was/Were","participle":"Been","spanish":"Ser,Estar"}
             , {"infinitive": "Can", "past":"Could","participle":"","spanish":"Poder"}
             , {"infinitive": "Do (Does)", "past":"Did","participle":"Done","spanish":"Hacer"}
@@ -94,10 +140,11 @@
             , {"infinitive": "Win", "past":"Won","participle":"Won","spanish":"Ganar"}
             , {"infinitive": "Write", "past":"Wrote","participle":"Written","spanish":"Escribir"}
         ];
+		*/
 // , {"infinitive": "", "past":"","participle":"","spanish":""}
-		// round to step 5 (plus 1)
-        document.getElementById("verbsSize").max = verbs.length + (5*(verbs.length % 5==0?0:1)) - (verbs.length % 5);
+
         const currentRandomSet = new Set();
+
         function getRandomArbitrary(min, max) {
             // keep tracking to avoid repeating
             var num = 0;
