@@ -120,12 +120,18 @@
     <script>
 
 		let startBgColor = document.getElementById("countdown").style.backgroundColor;
+		// just one counter/worker
+		let x = null;
 		
 		function startCountdown() {
+		  
 		  let counter = 60;
 		  document.getElementById("countdown").style.backgroundColor = startBgColor;
 		  document.getElementById("countdown").innerHTML = counter;
-		  let x = setInterval(function() {
+		  // if counter is active -> stop-it
+		  if (x != null)
+			clearInterval(x);
+		  x = setInterval(function() {
 			counter--;
 			document.getElementById("countdown").innerHTML = counter;
 			if (counter == 0) {
@@ -168,10 +174,11 @@
 			startCountdown();
 		}
 		
+		// alteramos la lista para favorecer las palabras
 		// https://es.wikipedia.org/wiki/Frecuencia_de_aparici%C3%B3n_de_letras
 		const vocales = "AAEEIOU";
 		
-		const consonantes = "BCCDDFGHJKLLMNNÑPQRRSSTVWXYZ";
+		const consonantes = "BBCCCDDDFFGGHJJKKLLLMMNNÑPPQRRRSSSTTVVWXYZ";
 
 		function letras(numVocales) {
 			for (var i = 1; i <= 10; i++) {
