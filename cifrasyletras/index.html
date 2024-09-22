@@ -36,32 +36,22 @@
   </div>
   <div class="row">
     <div class="col" >
-		<div class="alert alert-primary" role="alert"id="cifra1">CIFRA 1</div>
+		<div class="alert alert-primary fw-bold fs-2" role="alert"id="cifra1">CIFRA 1</div>
     </div>
     <div class="col" >
-		<div class="alert alert-primary" role="alert"id="cifra2">
-		CIFRA 2
-		</div>
+		<div class="alert alert-primary fw-bold fs-2" role="alert"id="cifra2">CIFRA 2</div>
     </div>
     <div class="col" >
-		<div class="alert alert-primary" role="alert"id="cifra3">
-		CIFRA 3
-		</div>
+		<div class="alert alert-primary fw-bold fs-2" role="alert"id="cifra3">CIFRA 3</div>
     </div>
     <div class="col" >
-		<div class="alert alert-primary" role="alert"id="cifra4">
-		CIFRA 4
-		</div>
+		<div class="alert alert-primary fw-bold fs-2" role="alert"id="cifra4">CIFRA 4</div>
     </div>
     <div class="col" >
-		<div class="alert alert-primary" role="alert"id="cifra5">
-		CIFRA 5
-		</div>
+		<div class="alert alert-primary fw-bold fs-2" role="alert"id="cifra5">CIFRA 5</div>
     </div>
     <div class="col" >
-		<div class="alert alert-primary" role="alert"id="cifra6">
-		CIFRA 6
-		</div>
+		<div class="alert alert-primary fw-bold fs-2" role="alert"id="cifra6">CIFRA 6</div>
     </div>
   </div>
   <input class="btn btn-primary" type="button" value="Aleatorio" onclick="cifras()" />
@@ -71,34 +61,34 @@
 <div class="container-fluid text-center">
   <div class="row">
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra1">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra1">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra2">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra2">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra3">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra3">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra4">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra4">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra5">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra5">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra6">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra6">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra7">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra7">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra8">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra8">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra9">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra9">LETRA</div>
     </div>
     <div class="col">
-      <div class="alert alert-primary" role="alert"id="letra10">LETRA</div>
+      <div class="alert alert-primary fw-bold fs-2" role="alert"id="letra10">LETRA</div>
     </div>
   </div>
   <div class="row">
@@ -125,26 +115,41 @@
 		
 		function startCountdown() {
 		  
-		  let counter = 60;
-		  document.getElementById("countdown").style.backgroundColor = startBgColor;
-		  document.getElementById("countdown").innerHTML = counter;
 		  // if counter is active -> stop-it
 		  if (x != null)
 			clearInterval(x);
-		  x = setInterval(function() {
+
+		  let counter = 60;
+		  document.getElementById("countdown").style.backgroundColor = startBgColor;
+		  document.getElementById("countdown").innerHTML = counter;
+
+		  let xw = setInterval(function() {
 			counter--;
 			document.getElementById("countdown").innerHTML = counter;
 			if (counter == 0) {
-			  clearInterval(x);
+			  clearInterval(xw); // siempre referencia al local
 			  document.getElementById("countdown").innerHTML = "SIN TIEMPO";
 			  document.getElementById("countdown").style.backgroundColor = 'LightCoral';
 			}
 		  }, 1000);
+		  x = xw; // para pararlo si volvemos a entrar
 		}
 
-        function getRandomArbitrary(min, max) {
-			return Math.trunc(Math.random() * (max - min) + min);
+        function getRandomArbitrary(min, max) {			
+			return Math.floor(Math.random() * (max - min) ) + min; // Math.trunc(Math.random() * (max - min) + min);
         }
+		
+		function getRandomInt(max) { // from 0 to max -1
+		  return Math.floor(Math.random() * max);
+		}
+		
+		function getRandomInt(min, max) {
+		  const minCeiled = Math.ceil(min);
+		  const maxFloored = Math.floor(max);
+		  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+		}
+
+		
 		const arrCifras = new Array();
 		arrCifras[1] = '1';
 		arrCifras[2] = '2';
@@ -163,14 +168,14 @@
 		
 		function cifras() {
 		// seis números (del 1 al 10, 25, 50, 75 y 100) -->
-			document.getElementById("cifra1").innerHTML = arrCifras[getRandomArbitrary(1, 14)];
-			document.getElementById("cifra2").innerHTML = arrCifras[getRandomArbitrary(1, 14)];
-			document.getElementById("cifra3").innerHTML = arrCifras[getRandomArbitrary(1, 14)];
-			document.getElementById("cifra4").innerHTML = arrCifras[getRandomArbitrary(1, 14)];
-			document.getElementById("cifra5").innerHTML = arrCifras[getRandomArbitrary(1, 14)];
-			document.getElementById("cifra6").innerHTML = arrCifras[getRandomArbitrary(1, 14)];
+			document.getElementById("cifra1").innerHTML = arrCifras[getRandomInt(1,15)];
+			document.getElementById("cifra2").innerHTML = arrCifras[getRandomInt(1,15)];
+			document.getElementById("cifra3").innerHTML = arrCifras[getRandomInt(1,15)];
+			document.getElementById("cifra4").innerHTML = arrCifras[getRandomInt(1,15)];
+			document.getElementById("cifra5").innerHTML = arrCifras[getRandomInt(1,15)];
+			document.getElementById("cifra6").innerHTML = arrCifras[getRandomInt(1,15)];
 			
-			document.getElementById("cifraObjetivo").innerHTML = getRandomArbitrary(1, 999);
+			document.getElementById("cifraObjetivo").innerHTML = getRandomInt(1,1000); // getRandomArbitrary(1, 999);
 			startCountdown();
 		}
 		
@@ -178,16 +183,16 @@
 		// https://es.wikipedia.org/wiki/Frecuencia_de_aparici%C3%B3n_de_letras
 		const vocales = "AAEEIOU";
 		
-		const consonantes = "BBCCCDDDFFGGHJJKKLLLMMNNÑPPQRRRSSSTTVVWXYZ";
+		const consonantes = "BBBCCCCDDDDFFFGGGHHJJJKLLLMMMNNNÑPPPQRRRRSSSSTTTVVWXYZ";
 
 		function letras(numVocales) {
 			for (var i = 1; i <= 10; i++) {
 				var letra = "?";
-				if (numVocales > 0) {
+				if ((getRandomInt(0,2) == 1 && numVocales > 0) || i + numVocales > 10 ) {
 					numVocales--;
-					letra = vocales.charAt(getRandomArbitrary(0, vocales.length));
+					letra = vocales.charAt(getRandomInt(0, vocales.length));
 				} else { // consonante
-					letra = consonantes.charAt(getRandomArbitrary(0, consonantes.length));
+					letra = consonantes.charAt(getRandomInt(0, consonantes.length));
 				}
 				document.getElementById("letra"+i).innerHTML = letra;
 			}
