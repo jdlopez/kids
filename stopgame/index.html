@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JUEGO DEL STOP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container-fluid">
+<h1>Juega al STOP conmigo!</h1>
+<p><a href="https://es.wikipedia.org/wiki/Tutti_frutti_(juego)" target="_new">El juego</a></p>
+</div>
+
+<div class="alert alert-primary text-center fs-1 text-white" role="alert"  id="countdown"></div>
+
+<div class="card" >
+  <div class="card-body">
+    <h5 class="card-title">Instrucciones</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Selecciona categorias</h6>
+    <p class="card-text">Primero hay que elegir las categorias con las que jugar (5)</p>
+
+    <input class="btn btn-primary" type="button" value="Jugar!" onclick="elegirCategorias()" />
+
+    <div class="container text-center">
+      <div class="row align-items-center">
+        <div id="categoria1" class="col text-dark fs-2">categoria</div>
+        <div id="categoria2" class="col text-dark fs-2">categoria</div>
+        <div id="categoria3" class="col text-dark fs-2">categoria</div>
+        <div id="categoria4" class="col text-dark fs-2">categoria</div>
+        <div id="categoria5" class="col text-dark fs-2">categoria</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card" >
+  <div class="card-body">
+    <h5 class="card-title">Letra</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Pulsa para elegir una letra al azar</h6>
+
+    <input class="btn btn-primary" type="button" value="Letra nueva" onclick="letra()" />
+    <div class="container text-center">
+      <div class="row align-items-center">
+        <div id="letraElegida" class="col text-dark fs-2">LETRA ELEGIDA</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <script>
+
+		let startBgColor = document.getElementById("countdown").style.backgroundColor;
+		// just one counter/worker
+		let x = null;
+		
+		function startCountdown() {
+		  
+		  // if counter is active -> stop-it
+		  if (x != null)
+			clearInterval(x);
+
+		  let counter = 60;
+		  document.getElementById("countdown").style.backgroundColor = startBgColor;
+		  document.getElementById("countdown").innerHTML = counter;
+
+		  let xw = setInterval(function() {
+			counter--;
+			document.getElementById("countdown").innerHTML = counter;
+			if (counter == 0) {
+			  clearInterval(xw); // siempre referencia al local
+			  document.getElementById("countdown").innerHTML = "SIN TIEMPO";
+			  document.getElementById("countdown").style.backgroundColor = 'LightCoral';
+			}
+		  }, 1000);
+		  x = xw; // para pararlo si volvemos a entrar
+		}
+
+        const currentRandomSet = new Set();
+
+        function randomInt(min, max) {
+          return Math.trunc(Math.random() * (max - min) + min);
+        }
+
+        function getRandomArbitrary(min, max) {
+          // keep tracking to avoid repeating
+          var num = 0;
+          for (var i = 0; i < 10; i++) {
+            num = randomInt(min, max)
+            if (!currentRandomSet.has(num)) {
+              currentRandomSet.add(num);
+              return num;
+            }
+          } // end for (just 10 tries)
+          return num;
+        }
+
+		
+		const categorias = new Array();
+		categorias[categorias.length] = 'ANIMAL';
+		categorias[categorias.length] = 'FAMOSO';
+		categorias[categorias.length] = 'MARCA';
+		categorias[categorias.length] = 'COMIDA';
+		categorias[categorias.length] = 'APELLIDO';
+		categorias[categorias.length] = 'NOMBRE';
+		categorias[categorias.length] = 'PAÍS';
+		categorias[categorias.length] = 'CIUDAD';
+		categorias[categorias.length] = 'PRENDA';
+		categorias[categorias.length] = 'OBJETO';
+		categorias[categorias.length] = 'CANTANTE';
+		categorias[categorias.length] = 'ACTOR';
+		categorias[categorias.length] = 'PARTE DEL CUERPO';
+		categorias[categorias.length] = 'COLOR';
+        categorias[categorias.length] = 'PROFESIÓN';
+        // categorias[categorias.length] = '';
+
+		function elegirCategorias() {
+			document.getElementById("categoria1").innerHTML = categorias[getRandomArbitrary(0,categorias.length-1)];
+			document.getElementById("categoria2").innerHTML = categorias[getRandomArbitrary(0,categorias.length-1)];
+			document.getElementById("categoria3").innerHTML = categorias[getRandomArbitrary(0,categorias.length-1)];
+			document.getElementById("categoria4").innerHTML = categorias[getRandomArbitrary(0,categorias.length-1)];
+			document.getElementById("categoria5").innerHTML = categorias[getRandomArbitrary(0,categorias.length-1)];
+
+		}
+
+        function letra() {
+          codeA = "A".charCodeAt(0)
+          codeZ = "Z".charCodeAt(0)
+
+          document.getElementById("letraElegida").innerHTML = String.fromCharCode(randomInt(codeA,codeZ));
+          startCountdown();
+        }
+		
+    </script>
+</body>
+</html>
+
